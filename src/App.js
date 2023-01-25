@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.scss";
+import TheClock from "./TheClock/TheClock";
+import ControlBar from "./ControlBar/ControlBar";
 
 function App() {
+  const [ControlBarView, setControlBarView] = useState(false);
+  const [ClockStyle, setClockStyle] = useState({ fontSize: 36 });
+
+  const UpdateClockStyle = (newClockStyle) => {
+    setClockStyle(newClockStyle);
+  };
+
+  const ClockOnClickEvent = () => {
+    if (ControlBarView) setControlBarView(false);
+    else setControlBarView(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TheClock ClockOnClickEvent={ClockOnClickEvent} ClockStyle={ClockStyle} />
+      {ControlBarView ? (
+        <ControlBar
+          ClockStyle={ClockStyle}
+          UpdateClockStyle={UpdateClockStyle}
+        />
+      ) : null}
     </div>
   );
 }
